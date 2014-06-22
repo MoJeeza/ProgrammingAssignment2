@@ -21,30 +21,30 @@
 # Write a short comment describing this function
 # 
 # this function makeCacheMatrix is being defined at the parent environment
-# which is the global environment.
+# which is the global environment. This function will store/cache the matrix as well as it's inverse. The storing of the matrix is done via the function call to set
 
 ## 
 
-makeCacheMatrix <- function(x = matrix()) {      ## by default a matrix is expected as the value for the formal argument x
+makeCacheMatrix <- function(my_matrix = matrix()) {      ## by default a matrix is expected as the value for the formal argument my_matrix
 
-    inv <- NULL
-    set <- function(y) {
-        x <<- y
-        inv <<- NULL
+    store_inv_of_matrix <- NULL             ## initially we don't have inverse of the matrix
+    set_my_matrix <- function(get_new_matrix) {
+        my_matrix <<- get_new_matrix
+        store_inv_of_matrix <<- NULL
     }
-    get <- function() {
-        x
+    get_my_matrix <- function() {
+        my_matrix
     }
-    setinv <- function(solvex) {
-        inv <<- solvex
+    set_the_inv <- function(get_inv_of_matrix) {
+        store_inv_of_matrix <<- get_inv_of_matrix
     }
-    getinv <- function() {
-        inv
+    get_the_inv <- function() {
+        store_inv_of_matrix
     }
-    list(set = set, 
-         get = get,
-         setinv = setinv,
-         getinv = getinv)
+    list(set_my_matrix = set_my_matrix, 
+         get_my_matrix = get_my_matrix,
+         set_the_inv = set_the_inv,
+         get_the_inv = get_the_inv)
 }
 
 
@@ -56,7 +56,7 @@ makeCacheMatrix <- function(x = matrix()) {      ## by default a matrix is expec
 ##
 cacheSolve <- function(x, ...) {        ## here x is the list of 4 functions
         ## Return a matrix that is the inverse of 'x'
-    get_matrix_inv <- x$getinv()        ## check if the inverse of the matrix
+    get_matrix_inv <- x$get_the_inv()        ## check if the inverse of the matrix
                                         ## has been computed before. if so retrieve it
     if(!is.null(get_matrix_inv)) {     ## if get_matrix_inv is not null then an
                                         ## inv of the matrix exists, 
@@ -65,8 +65,8 @@ cacheSolve <- function(x, ...) {        ## here x is the list of 4 functions
         message("getting cached data")  ## tell that we found the cached value
         return(get_matrix_inv)          ## return the cached value
     }                                   ## inverse of the matrix was not found so
-    my_matrix <- x$get()                ## get the current matrix
+    my_matrix <- x$get_my_matrix()                ## get the current matrix
     my_matrix_inv <- solve(my_matrix, ...)     ## compute the inverse of the matrix 
-    x$setinv(my_matrix_inv)                     ## cache the inverse of the matrix
+    x$set_the_inv(my_matrix_inv)                     ## cache the inverse of the matrix
     my_matrix_inv                           ## return the inverse of the matrix
 }
