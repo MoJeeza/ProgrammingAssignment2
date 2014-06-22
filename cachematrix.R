@@ -1,5 +1,11 @@
 ## Put comments here that give an overall description of what your
 ## functions do
+##
+## These functions demonstrate the implementation of lexical scoping 
+# with in the R programming language - as opposed to dynamic scoping
+# the are basicially two functions in this file: makeCacheMatrix and 
+# cacheSolve
+
 
 ##
 ## Author: Mohsin Jessa
@@ -12,7 +18,7 @@
 
 ## 
 
-makeCacheMatrix <- function(x = matrix()) {
+makeCacheMatrix <- function(x = matrix()) {      ## by default a matrix is expected as the value for the formal argument x
 
     inv <- NULL
     set <- function(y) {
